@@ -39,11 +39,11 @@ jobs:
       # 6. S3 업로드 (환경별 버킷 자동 선택)
       - name: Upload to S3
         run: |
-          BUCKET_NAME="${{ secrets.BUCKET_NAME }}"
+          BUCKET_NAME="${{ secrets.DEV_BUCKET_NAME }}"
           aws s3 sync dist/ s3://$BUCKET_NAME --delete
 
       # 7. CloudFront 캐시 무효화 (환경별 분리)
       - name: CloudFront Cache Invalidation
         run: |
-          CF_ID="${{ secrets.CF_DISTRIBUTION_ID }}"
+          CF_ID="${{ secrets.DEV_CF_DISTRIBUTION_ID }}"
           aws cloudfront create-invalidation --distribution-id $CF_ID --paths "/*"
